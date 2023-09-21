@@ -1,0 +1,48 @@
+header {
+    background-color: transparent;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+
+    .navbar-collapse {
+        flex-grow: 0 !important;
+    }
+
+    span {
+        color: white;
+        border: none;
+
+        &:focus {
+            border: none;
+        }
+    }
+
+    ul {
+        li {
+            padding: 10px 25px;
+
+            a.nav-link {
+                color: white;
+                display: block;
+                text-transform: uppercase;
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 18px;
+
+                &:hover {
+                    color: white;
+                }
+
+            }
+        }
+    }
+}
+
+
+.navbar-toggler {
+    border: none !important;
+
+    &:focus {
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,23 @@
+.subject-page{
+  .card{
+    box-shadow: 0px 4px 20px rgb(0 0 0 / 15%);
+    border-radius: 10px;
+  }
+
+  .fa-download{
+    color: $mainColor;
+  }
+
+  .card-title{
+    font-size: 25px;
+    color:$mainColor;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 30px 0px;
+  }
+  
+
+  .card-subtitle{
+    font-size: 20px;
+  }
+}

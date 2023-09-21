@@ -1,0 +1,629 @@
+﻿@using Microsoft.AspNetCore.Html;
+
+@model PagenatedListDto<Event>
+@{
+    int count = (Model.PageIndex - 1) * Model.PageSize + 1;
+    string truncatedContent;
+    
+                                                        
+     int index = 0;
+                                                        
+                                                    
+
+}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Noto+Sans&family=Open+Sans:wght@300&family=Poiret+One&display=swap" rel="stylesheet">
+<style>
+    body{
+
+    /*font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans', sans-serif;*/
+    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Poiret One', cursive;*/
+    }
+   /*  @@media screen and (min-width: 1300px) {
+     
+         .sticky-button{
+             left:20% !important;
+         }
+     }*/
+
+
+    @@media screen and (max-width: 1200px) {
+        td:nth-child(4) {
+            display: none;
+           
+        }
+
+        th:nth-child(4) {
+            display: none;
+        }
+    }
+
+    @@media screen and (max-width: 580px) {
+        td:nth-child(2) {
+            display: none;
+        }
+
+        th:nth-child(2) {
+            display: none;
+        }
+    }
+
+    @@media screen and (max-width: 1000px) {
+          #sticky-bar{
+              width:95%!important;
+          }
+    }
+
+    @@media screen and (max-width: 860px) {
+        td:nth-child(4) {
+           display:none;
+           
+        }
+
+        td {
+            
+            text-align: center;
+        }
+
+        td:nth-child(5) {
+            display: none;
+           
+        }
+
+        td:nth-child(6) {
+            display: none;
+           
+        }
+
+        th:nth-child(4) {
+            display: none;
+        }
+
+        th:nth-child(5) {
+            display: none;
+        }
+
+        th:nth-child(6) {
+            display: none;
+        }
+    }
+
+    .sticky {
+        position: fixed;
+        top: 0; /* or bottom: 0; if you want to stick to the bottom */
+        z-index:10;
+        width:87% !important;
+    }
+    .sticky-button{
+        position:fixed !important;
+        left: 12% !important;
+        z-index: 11 !important;
+    }
+    .sticky-search{
+        position: fixed !important;
+        z-index: 11;
+    }
+
+    .search-box {
+        width: fit-content;
+        height: fit-content;
+        position: absolute;
+        right: 2%;
+        top: 4px;
+    }
+
+    .input-search {
+        height: 50px;
+        width: 50px;
+        border-style: none;
+        padding: 10px;
+        font-size: 18px;
+        letter-spacing: 2px;
+        outline: none;
+        border-radius: 25px;
+        transition: all .5s ease-in-out;
+        background-color: #22a6b3;
+        padding-right: 40px;
+        color: #fff;
+    }
+
+        .input-search::placeholder {
+            color: rgba(255,255,255,.5);
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 100;
+        }
+
+    .btn-search {
+        width: 50px;
+        height: 50px;
+        border-style: none;
+        font-size: 20px;
+        font-weight: bold;
+        outline: none;
+        cursor: pointer;
+        border-radius: 50%;
+        position: absolute;
+        right: 0px;
+        color: #ffffff;
+        background-color: transparent;
+        pointer-events: painted;
+    }
+
+        .btn-search:focus ~ .input-search {
+            width: 300px;
+            border-radius: 0px;
+            border-radius: 10px;
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,.5);
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+        }
+
+    .input-search:focus {
+        width: 300px;
+        border-radius: 0px;
+        border-radius: 10px;
+        background-color: transparent;
+        border: 1px solid rgba(255,255,255,.5);
+        transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+    }
+    .action-td{
+        display: flex;
+        height: 252px;
+        position: relative;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+    .btn-create{
+        color:white;
+        position: absolute;
+        background: #32de84;
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        /* text-align: center; */
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        left: 2%;
+        top: 4px;
+    }
+
+    .btn-create:hover {
+            color: white;
+    }
+    #statusElement{
+        width: 4rem;
+    }
+    th{
+        text-align:center;
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    @* <section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+    <div class="col-sm-12 d-flex">
+    <div class="col-sm-12" style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+
+    <a style="pos" asp-action="Create" class="btn btn-app bg-success">
+    <i class="fas fa-solid fa-plus"></i> Create
+    </a>
+    </div>
+    </div>
+    </div>
+    </div><!-- /.container-fluid -->
+    </section>*@
+
+    <!-- Main content -->
+    <section class="content my-2">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="row">
+                        <div style="display: contents;">
+                        <a   asp-action="Create" class="btn-create">
+                            <i class="fas fa-solid fa-plus"></i> 
+                        </a>
+                        <h1 id="sticky-bar" style="    background: #0E205B;
+                                    color: white;
+                                    padding: 5px;
+                                    border-radius: 10px;
+                                     text-align:center ;width:100%   ">
+                            Events
+                        </h1>
+                        <div class="search-box">
+                            <button class="btn-search"><i class="fas fa-search"></i></button>
+                            <input type="text" id="searchInput" class="input-search" placeholder="Başlığa görə axdarın...">
+                        </div>
+                        </div>
+                        <div class="col-lg-12">
+
+                            @if (Model.HasItems)
+                            {
+                                <table class="table table-striped projects">
+
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Title</th>
+                                            <th style="min-width:25%" scope="col">About</th>
+                                            <th scope="col">Start Date</th>
+                                            <th scope="col">End Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="searchResults">
+
+
+                                        @{
+                                            index = 0;
+                                        }
+
+                                        @foreach (Event item in Model)
+                                        {
+
+                                            <tr>
+                                                <td scope="row" style=" vertical-align: middle;">
+                                                    @(
+                                                    count++
+                                                    )
+                                                   
+                                                </td>
+                                                <td>
+                                                    <div class="image-box">
+                                                        <img src="~/uploads/events/@item.Image" style="height:200px;width:200px;object-fit:contain">
+                                                    </div>
+                                                    <hr>
+                                                    <vr>
+                                                </td>
+                                              
+                                                <td style="width: 10%;">@item.Title</td>
+
+
+
+                                                @if (item.Content.Length <= 100)
+                                                {
+
+                                                    <td style="width:25%">
+                                                        @Html.Raw(item.Content)
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    string tag = item.Content.Substring(0, 1);
+                                                    string tag2 = item.Content.Substring(1, 2);
+                                                    string tag3 = tag + "/" + tag2;
+                                                    truncatedContent = item.Content.Substring(0, 100) + tag3;
+                                                    <td style="width: 25%;">
+                                                        @Html.Raw(truncatedContent)
+                                                    </td>
+
+                                                }
+
+
+                                                <td>@item.StartTime</td>
+                                                <td>@item.EndTime</td>
+                                                @if (item.IsDeleted == true)
+                                                {
+                                                    <td><span id="statusElement" class="status-badge badge bg-danger">Passive</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span id="statusElement" class="status-badge badge bg-success">Active</span></td>
+                                                }
+                                                <td class="action-td" >
+
+                                                    <a asp-action="edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="Redaktə et" class="btn btn-outline-info">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                    <a asp-action="Remove" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="Sil" class="btn btn-outline-danger btn-delete-sweet">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </a>
+                                                  
+                                                    @if (item.IsDeleted == false)
+                                                    {
+                                                        <button id="success" style="width: 100%;" class="change-status-button btn btn-outline-warning " onclick="sendStatusChangeRequest(@item.Id,@index)" data-toggle="tooltip" data-placement="top" title="Bərpa et">
+                                                                <i  class="status-icon fas fa-solid fa-trash"></i>
+                                                            </button>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <button id="StatusBtn" type="submit" style="width: 100%;" class="change-status-button btn btn-outline-success " onclick="sendStatusChangeRequest(@item.Id,@index)" data-toggle="tooltip" data-placement="top" title="Bərpa et">
+                                                            <i class="status-icon fas fa-solid fa-trash-arrow-up"></i>
+                                                        </button>
+                                                    }
+                                                    
+                                                       @{index++;}
+                                                        
+                                                   
+                                                </td>
+                                            </tr>
+
+                                        }
+
+
+
+                                    </tbody>
+
+                                </table>
+                            }
+                            else
+                            {
+                                @await Html.PartialAsync("_NoResultItemPartial")
+
+                            }
+
+                            @await Html.PartialAsync("_PaginationPartial")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+    <script src="~/manage/main.js"></script>
+
+
+    <script src="~/lib/signalr/microsoft/signalr/dist/browser/signalr.js">
+
+    </script>
+    <script>
+  
+           
+    
+
+
+
+
+
+        const titleBar = document.getElementById('sticky-bar');
+        const createBtn=document.getElementsByClassName('btn-create')[0];
+        const searchBtn = document.getElementsByClassName('search-box')[0];
+        // Get the initial offset position of the title bar
+        const initialOffset = titleBar.offsetTop;
+       
+        // Function to handle the scroll event
+        function handleScroll() {
+            if (window.pageYOffset > initialOffset) {
+                // Add a class to make the title bar sticky  
+                titleBar.classList.add('sticky');
+                createBtn.classList.add('sticky-button');
+                searchBtn.classList.add('sticky-search');
+
+
+            } else {
+                // Remove the class to revert to the original position
+                titleBar.classList.remove('sticky');
+                createBtn.classList.remove('sticky-button');
+                searchBtn.classList.remove('sticky-search');
+            }
+           
+        }
+
+        // Add a scroll event listener to the window
+        window.addEventListener('scroll', handleScroll);
+       
+
+
+
+
+
+
+
+
+
+        ///Change Status
+        const connectionSt = new signalR.HubConnectionBuilder()
+            .withUrl("/statusHub") // Use the hub URL defined in Startup.cs
+            .build();
+        async function starts() {
+            try {
+                await connectionSt.start();
+              //  console.log("SignalRStatus Connected.");
+            } catch (err) {
+                console.log(err);
+                setTimeout(start, 5000);
+            }
+        };
+        connectionSt.onclose(async () => {
+            await start();
+        });
+        starts();
+       
+        connectionSt.on("ReceiveStatusUpdate", (status,index) => {
+            // Update the UI with the new status
+         //   document.getElementById("statusElement").innerText = status;
+            const element = document.getElementsByClassName("status-badge")[index];
+            const icon = document.getElementsByClassName("status-icon")[index];
+            const btn = document.getElementsByClassName("change-status-button")[index];
+          
+            if (status == "true") {
+                element.innerText = "Passive";
+                element.classList.remove("bg-success");
+                element.classList.add("bg-danger");
+
+                btn.classList.remove("btn-outline-warning");
+                btn.classList.add("btn-outline-success");
+
+                icon.classList.remove("fa-trash");
+                icon.classList.add("fa-trash-arrow-up");
+                toastr.success("Tədbir passiv edildi.");
+            }
+            if (status == "passive") {
+                element.innerText = "Active";
+                element.classList.remove("bg-danger");
+                element.classList.add("bg-success");
+                btn.classList.remove("btn-outline-success");
+                btn.classList.add("btn-outline-warning");
+                icon.classList.remove("fa-trash-arrow-up");
+                icon.classList.add("fa-trash");
+                toastr.success("Tədbir aktiv edildi.");
+                
+            }
+        });      
+
+        // Function to send status updates
+        function sendStatusUpdate(status,index) {
+            connectionSt.invoke("UpdateStatus", status,index).catch((error) => {
+                console.error(error);
+            });
+        }
+
+
+
+        function sendStatusChangeRequest(itemId,index) {
+            // Send a POST request to your .NET Core MVC controller
+            fetch(`/azadedu/Event/ChangeStatus/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id:itemId}),
+            })
+                .then(response => response.json())
+                        .then(data => {
+                   // console.log('Data updated successfully');                  
+                    if (data.isDeleted == false) {
+                        sendStatusUpdate('passive',index)                       
+                    }
+                    if (data.isDeleted) {
+                        sendStatusUpdate('true',index);                     
+                    }
+                  console.log(data);
+                })               
+                .catch(error => {                
+                    // Handle error, e.g., show an error message to the user
+                    console.error('There was a problem with the request:', error);
+                });
+        }
+
+
+        ///Search
+       
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/searchHub")
+            .build();
+       
+        async function start() {
+            try {
+                await connection.start();
+                console.log("SignalR Connected.");
+            } catch (err) {
+                console.log(err);
+                setTimeout(start, 5000);
+            }
+        };
+        connection.onclose(async () => {
+            await start();
+        });
+
+        // Start the connection.
+        start();
+
+        document.getElementById("searchInput").addEventListener("input", async function () {
+            const query = this.value;
+            try {
+                await connection.invoke("SendSearchResults", query);
+            } catch (err) {
+                console.error(err);
+                
+            }
+
+        });
+
+        connection.on("ReceiveSearchResults", (query, results) => {
+           
+            let filteredCitiesHtml = results.map((result, index) => {            
+                if (result.content.length>100){
+                    result.content = result.content.substring(0, 100);
+                }
+                var statusB;
+                var statusBtn;
+               let i=0;
+                i+=1;
+        if (result.isDeleted == true)
+        {
+                    statusB = ` <span id="statusElement" class="status-badge badge bg-danger" > Passive </span>
+            `;
+                    statusBtn = `<button type="submit" data-id="${result.id}"  onclick="sendStatusChangeRequest(${result.id},${index})" id="StatusBtn"   style="width: 100%;" class="change-status-button  btn btn-outline-success"   data-toggle="tooltip" data-placement="top" title="Bərpa et">
+                                <i id="StatusIco" class="status-icon fas fa-solid fa-trash-arrow-up"></i>
+                              </button>`;
+        }
+        else{
+         statusB=`
+                                <span id="statusElement" class="status-badge badge bg-success" > Active
+                        `;
+                    statusBtn = `  <button data-id="${result.id}" onclick="sendStatusChangeRequest(${result.id},${index})" id="StatusBtn" style="width: 100%;" class="change-status-button  btn btn-outline-warning   data-toggle="tooltip" data-placement="top" title="Kənar et">
+                         <i class="status-icon fas fa-solid fa-trash"></i>
+                 </button>`;
+        }
+               
+
+                return `
+                          <tr>
+                    <td scope="row" style=" vertical-align: middle;">
+                         ${index+1}
+                       </td>
+
+                    <td>
+                        <div class="image-box">
+                                    <img src="/uploads/events/${result.image} " style="height:200px;width:200px;object-fit:contain">
+                        </div>
+                        <img>
+                    </td>
+                            <td style="width: 10%;">${result.title} </td>
+                                              <td style="width: 25%;">
+                        ${result.content}
+                      </td>
+                                <td>${result.startTime}</td>
+                                 <td>${result.endTime}</td>
+                                  <td>${statusB}</td>
+                       <td class="action-td">
+                                     
+                        <a href="/Azadedu/Event/edit/${result.id}"  data-toggle="tooltip" data-placement="top" title="Redaktə et" class="btn btn-outline-info">
+                            <i class="bi bi-pencil-square"></i>
+                            </a>
+                             <a href="/Azadedu/Event/Remove/${result.id}" data-toggle="tooltip" data-placement="top" title="Sil" class="btn btn-outline-danger btn-delete-sweet">
+                              <i class="bi bi-x-lg"></i>
+                              </a>
+                                 
+                               ${statusBtn}                           
+                       </td>
+                                            </tr>`;
+               
+            });
+           
+            const result = filteredCitiesHtml.join("");
+            document.getElementById("searchResults").innerHTML = result;
+           
+        });
+    </script>
+    <script>
+
+
+       
+    </script>
+}
+
+
+

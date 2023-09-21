@@ -1,0 +1,119 @@
+.footer-top {
+    background-color: $secondaryColor;
+    color: $backgroundColor;
+    line-height: 1.5;
+    padding: 40px 20px;
+
+    .footer-top-middle {
+        text-align: center;
+        margin-bottom: 30px;
+
+        .footer-social {
+            a {
+                color: #f9f9f9;
+                padding: 5px;
+                font-size: 4vh;
+                transition: .25s;
+
+                &:hover {
+                    color: #12ADFF;
+
+                }
+            }
+
+            margin-bottom: 10px;
+        }
+    }
+
+    .footer-uni-logo {
+        width: 45% !important;
+
+        img {
+
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    .footer-connect {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+.footer-bottom {
+    background-color: $thirdColor;
+
+    .footer-copyright {
+        text-align: center;
+
+        p {
+            padding: 20px 0;
+            font-size: 14px;
+            color: #999;
+        }
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .footer-top {
+        padding: 82px 0 40px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .footer-top {
+        padding: 60px 0 40px;
+        text-align: center !important;
+
+        img {
+            display: none;
+        }
+
+        .footer-connect {
+            text-align: center !important;
+        }
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .footer-top {
+        padding: 40px 0 35px;
+
+        img {
+            display: none;
+        }
+
+        .footer-connect {
+            text-align: center !important;
+        }
+    }
+}
+
+@media (min-width: 321px) and (max-width: 479px) {
+    .footer-top {
+        padding: 40px 0 20px;
+
+        img {
+            display: none;
+        }
+
+        .footer-connect {
+            text-align: center !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .footer-top {
+        padding: 35px 0 10px;
+
+        img {
+            display: none;
+        }
+
+        .footer-connect {
+            text-align: center !important;
+        }
+    }
+}

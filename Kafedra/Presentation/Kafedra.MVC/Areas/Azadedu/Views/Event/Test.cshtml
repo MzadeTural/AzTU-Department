@@ -1,0 +1,55 @@
+﻿<input type="text" id="searchInput" placeholder="Search...">
+<div id="searchResults"></div>
+
+@section scripts {
+
+   
+    <script src="~/lib/signalr/microsoft/signalr/dist/browser/signalr.js">
+
+    </script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/searchHub")
+            .build();
+        console.log(connection);
+        async function start() {
+            try {
+                await connection.start();
+                console.log("SignalR Connected.");
+            } catch (err) {
+                console.log(err);
+                setTimeout(start, 5000);
+            }
+        };
+
+        connection.onclose(async () => {
+            await start();
+        });
+
+        // Start the connection.
+        start();
+
+        document.getElementById("searchInput").addEventListener("input",async function () {
+            const query = this.value;
+            try {
+                await connection.invoke("SendSearchResults", query);
+            } catch (err) {
+                console.error(err);
+                console.log(err)
+            }
+            
+        });
+
+        connection.on("ReceiveSearchResults", (query, results) => {
+           
+            
+            console.log(results[0]);
+            let filteredCitiesHtml = results.map((result) => {
+                return `<li>${result.title} - ${result.content}</li>`;
+            });
+           
+            document.getElementById("searchResults").innerHTML = filteredCitiesHtml;
+
+        });
+    </script>
+}

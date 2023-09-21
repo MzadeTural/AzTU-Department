@@ -1,0 +1,218 @@
+﻿@using Kafedra.Application.ViewModel.Home;
+@model PagenatedListDto<Slider>
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+
+    int num = 1;
+    int index;
+
+}
+<style>
+
+    ::-webkit-scrollbar {
+        
+        height: 5px;
+        border-radius:10px;
+    }
+    .btn-create {
+        color: white;
+        position: absolute;
+        background: #32de84;
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        /* text-align: center; */
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        left: 2%;
+        top: 23px;
+    }
+
+        .btn-create:hover {
+            color: white;
+        }
+
+    #statusElement {
+        width: 4rem;
+    }
+
+    tr {
+        text-align: center;
+    }
+
+    td {
+        vertical-align: middle !important
+    }
+</style>
+<div class="content-wrapper">
+
+
+<section class="content my-3">
+    <div class="container-fluid">
+        <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="display: contents;">
+                                <a asp-action="Create" class="btn-create">
+                                    <i class="fas fa-solid fa-plus"></i>
+                                </a>
+                                <h1 id="sticky-bar" style="    background: #0E205B;
+                                    color: white;
+                                    padding: 5px;
+                                    border-radius: 10px;
+                                     text-align:center ;width:100%   ">
+                                    Slides
+                                </h1>
+                                
+                            </div>
+
+                            <div class="table-responsive">
+
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Status</th>
+                                            <th style="align-items:center"> Image</th>
+                                            <th> Created Date</th>
+                                            <th>Setting</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            index = 0;
+                                        }
+                                        @foreach (var sld in Model)
+                                        {
+                                            <tr>
+                                                <td scope="row" style=" vertical-align: middle;">
+                                                    @(
+                                                        num++
+                                                        )
+
+                                                </td>
+                                                @if (sld.IsDeleted == true)
+                                                {
+                                                    <td><span id="statusElement" class="status-badge badge bg-danger">Passive</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span id="statusElement" class="status-badge badge bg-success">Active</span></td>
+                                                }
+                                                <td>
+                                                    <img src="~/assets/img/@sld.Image" alt="spotify" style="border-radius:0;width:200px;height:100px; object-fit:cover">
+                                                </td>
+                                                <td>
+                                                    <span>@sld.CreatedAt</span>
+                                                </td>
+
+
+                                                <td class="action-td">
+
+                                                    <a asp-action="edit" asp-route-id="@sld.Id" data-toggle="tooltip" data-placement="top" title="Redaktə et" class="btn btn-outline-info">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                    <a asp-action="Remove" asp-route-id="@sld.Id" data-toggle="tooltip" data-placement="top" title="Sil" class="btn btn-outline-danger btn-delete-sweet">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </a>
+
+                                                    @if (sld.IsDeleted == false)
+                                                    {
+                                                        <a id="success" class="change-status-button btn btn-outline-warning" onclick="sendStatusChangeRequest(@sld.Id,@index)" data-toggle="tooltip" data-placement="top" title="Bərpa et">
+                                                            <i class="status-icon fas fa-solid fa-trash"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <a id="StatusBtn" class="change-status-button btn btn-outline-success " onclick="sendStatusChangeRequest(@sld.Id,@index)" data-toggle="tooltip" data-placement="top" title="Bərpa et">
+                                                            <i class="status-icon fas fa-solid fa-trash-arrow-up"></i>
+                                                        </a>
+                                                    }
+
+                                                    @{
+                                                        index++;
+                                                    }
+
+
+                                                </td>
+
+                                            </tr>
+                                           
+                                        }
+
+                                    </tbody>
+
+                                </table>
+
+
+                                
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        </div>
+
+    
+</section>
+</div>
+
+<script>
+    function sendStatusChangeRequest(itemId, index) {
+        // Send a POST request to your .NET Core MVC controller
+        const element = document.getElementsByClassName("status-badge")[index];
+        const icon = document.getElementsByClassName("status-icon")[index];
+        const btn = document.getElementsByClassName("change-status-button")[index];
+        console.log(index);
+        fetch(`/azadedu/Slider/ChangeStatus/${itemId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: itemId }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // console.log('Data updated successfully');
+                if (data.isDeleted == false) {
+                   // sendStatusUpdate('passive', index)
+                    element.innerText = "Active";
+                    element.classList.add("bg-success");
+                    element.classList.remove("bg-danger");
+                   
+                    btn.classList.remove("btn-outline-success");
+                    btn.classList.add("btn-outline-warning");
+                    icon.classList.remove("fa-trash-arrow-up");
+                    icon.classList.add("fa-trash");
+                    toastr.success("Slayd aktiv edildi.");
+                }
+                if (data.isDeleted) {
+                  //  sendStatusUpdate('true', index);
+                    element.innerText = "Passive";
+                    element.classList.remove("bg-success");
+                    element.classList.add("bg-danger");
+                    btn.classList.remove("btn-outline-warning");
+                    btn.classList.add("btn-outline-success");
+
+                    icon.classList.remove("fa-trash");
+                    icon.classList.add("fa-trash-arrow-up");
+                    toastr.success("Slayd passiv edildi.");
+                }
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle error, e.g., show an error message to the user
+                console.error('There was a problem with the request:', error);
+            });
+    }
+
+</script>

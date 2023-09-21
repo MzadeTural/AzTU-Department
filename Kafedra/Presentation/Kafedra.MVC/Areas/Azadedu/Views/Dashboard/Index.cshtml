@@ -1,0 +1,445 @@
+﻿@using Kafedra.Application.DTOs.DashboardDTOs;
+    <!-- Content Header (Page header) -->
+@model DashboardListDTO
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poiret+One&display=swap" rel="stylesheet">
+<style>
+    *,
+    *:before,
+    *:after {
+        padding: 0;
+        margin: 0;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+        *:not(i) {
+           /* font-family: 'Noto Sans', sans-serif;
+            font-family: 'Poiret One', cursive;
+            font-weight: 900;*/
+        }
+   
+    .clock-box {
+       /* position: absolute;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;*/
+    }
+
+    .clock-container {
+        flex-direction:column;
+        align-items: center;
+        display: flex;
+        padding: 0.5rem;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.06);
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+        /*padding: 50px 25px;*/
+        -webkit-box-shadow: 0 25px 23px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 25px 23px rgba(0, 0, 0, 0.15);
+        border: 1.5px solid rgba(255, 255, 255, 0.06);
+        border-radius: 8px;
+    }
+
+
+    .clock {
+        position: relative;
+        font-family: monaco,consolas,"courier new",monospace;
+        font-size: 3.5rem;
+        line-height: 1.375;
+        text-align:center
+    }
+
+        .clock:before,
+        .clock:after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            content: ':';
+            z-index: 2;
+            line-height: 1.15;
+            color: #333;
+        }
+
+        .clock:before {
+            left: 2.325em;
+        }
+
+        .clock:after {
+            right: 2.325em;
+        }
+        #day{
+        background: #333;
+        border-radius: 5px;
+        padding: 2px;
+        margin-bottom: 2px;
+        color:#fff;
+        }
+
+        .clock span {
+            position: relative;
+            display: inline-block;
+            padding: 0 .25em;
+            margin: 0 .06125em;
+            z-index: 1;
+            -webkit-transform: perspective(750);
+            -moz-transform: perspective(750);
+            -ms-transform: perspective(750);
+            transform: perspective(750);
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+            .clock span:first-child {
+                margin-left: 0;
+            }
+
+            .clock span:last-child {
+                margin-right: 0;
+            }
+
+            .clock span:nth-child(2),
+            .clock span:nth-child(4) {
+                margin-right: .3em;
+            }
+
+            .clock span:nth-child(3),
+            .clock span:nth-child(5) {
+                margin-left: .3em;
+            }
+
+            .clock span:before,
+            .clock span:after {
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                color: #eee;
+                text-shadow: 0 1px 0 #fff;
+                background: #333;
+                border-radius: .125em;
+                outline: 1px solid transparent; /* fix jagged edges in ff */
+
+                -webkit-backface-visibility: hidden;
+                -moz-backface-visibility: hidden;
+                -ms-backface-visibility: hidden;
+                backface-visibility: hidden;
+                -webkit-transition: -webkit-transform .75s, opacity .75s;
+                -moz-transition: -moz-transform .75s, opacity .75s;
+                -ms-transition: -ms-transform .75s, opacity .75s;
+                transition: transform .75s, opacity .75s;
+            }
+
+            .clock span:before {
+                opacity: 1;
+                z-index: 1;
+                content: attr(data-old);
+                -webkit-transform-origin: 0 0;
+                -moz-transform-origin: 0 0;
+                -ms-transform-origin: 0 0;
+                transform-origin: 0 0;
+                -webkit-transform: translate3d(0,0,0) rotateX(0);
+                -moz-transform: translate3d(0,0,0) rotateX(0);
+                -ms-transform: translate3d(0,0,0) rotateX(0);
+                transform: translate3d(0,0,0) rotateX(0);
+            }
+
+            .clock span:after {
+                opacity: 0;
+                z-index: 2;
+                content: attr(data-now);
+                -webkit-transform-origin: 0 100%;
+                -moz-transform-origin: 0 100%;
+                -ms-transform-origin: 0 100%;
+                transform-origin: 0 100%;
+                -webkit-transform: translate3d(0,-102.5%,0) rotateX(90deg);
+                -moz-transform: translate3d(0,-102.5%,0) rotateX(90deg);
+                -ms-transform: translate3d(0,-102.5%,0) rotateX(90deg);
+                transform: translate3d(0,-102.5%,0) rotateX(90deg);
+            }
+
+        .clock .flip:before {
+            opacity: 0;
+            -webkit-transform: translate3d(0,102.5%,0) rotateX(-90deg);
+            -moz-transform: translate3d(0,102.5%,0) rotateX(-90deg);
+            -ms-transform: translate3d(0,102.5%,0) rotateX(-90deg);
+            transform: translate3d(0,102.5%,0) rotateX(-90deg);
+        }
+
+        .clock .flip:after {
+            opacity: 1;
+            -webkit-transform: translate3d(0,0,0) rotateX(0);
+            -moz-transform: translate3d(0,0,0) rotateX(0);
+            -ms-transform: translate3d(0,0,0) rotateX(0);
+            transform: translate3d(0,0,0) rotateX(0);
+        }
+   @@media screen and (max-width: 1235px) {
+        .dashboard-wc {
+   flex-direction:column;
+  }
+
+        .clock-container  {
+            margin-top: 0.5rem;
+            
+        }
+}
+
+    @@media screen and (max-width: 990px) {
+        .content-wrapper{
+            margin:0 !important;
+        }
+    }
+
+    @@media screen and (max-width: 590px) {
+        .clock span:nth-child(5) {
+           display:none;
+        }
+
+        .clock span:nth-child(6) {
+            display: none;
+        }
+
+        .clock::after {
+            display: none;
+        }
+
+        .clock span {
+            margin: 0 0.02125em;
+            font-size:2.5rem;
+        }
+
+        .clock::before {
+            left: 1.48em;
+            top: 0.12em;
+        }
+       
+    }
+
+</style>
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                
+                <div class="dashboard-wc" style="display: flex; justify-content: end;width: 100%;">
+                    <h1 style="padding-top: 3rem;" class="clock-container ">
+                        Dashboard
+                    </h1>
+
+                    <div class="clock-container  " style="justify-content: center;">
+                            @*<div class="shape1"></div>
+                            <div class="shape2"></div>*@
+                            <span id="day"></span>
+                            <span class="clock"></span>
+                      
+
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      
+    </section>
+
+<!-- /.content-header -->
+<!-- Main content -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+                <div class="col-lg-3 col-sm-6 col-12">
+
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@Model.AllUserCount</h3>
+                            <p>User Registrations </p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-12">
+
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@Model.AztuUserCount</h3>
+                            <p>User Registrations (As a AzTU student)</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-12">
+
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>@Model.InActiveUserCount</h3>
+                            <p>DeActive Registrations </p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+    </div><!-- /.container-fluid -->
+</section>
+</div>
+<!-- /.content -->
+@*<script>
+    const time = document.getElementById("time");
+    const day = document.getElementById("day");
+    const midday = document.getElementById("midday");
+
+    let clock = setInterval(
+        function calcTime() {
+            let date_now = new Date();
+            let hr = date_now.getHours();
+            let min = date_now.getMinutes();
+            let sec = date_now.getSeconds();
+            //let middayValue = "AM";
+
+            let days = [
+                "Bazar",
+                "Bazar ertəsi",
+                "Çərşənbə axşsamı",
+                "Çərşənbə",
+                "Cümə axşamı",
+                "Cümə",
+                "Şənbə"
+            ];
+
+            day.textContent = days[date_now.getDay()];
+
+            //middayValue = hr >= 12 ? "PM" : "AM";
+
+            //if (hr == 0) {
+            //    hr = 12;
+            //} else if (hr > 12) {
+            //    hr -= 12;
+            //}
+
+            hr = hr < 10 ? "0" + hr : hr;
+            min = min < 10 ? "0" + min : min;
+            sec = sec < 10 ? "0" + sec : sec;
+
+            time.textContent = hr + ":" + min + ":" + sec;
+            midday.textContent = middayValue;
+        },
+
+        1000
+    );
+
+</script>*@
+<script>
+
+    var Clock = (function () {
+
+        var exports = function (element) {
+            this._element = element;
+            var html = '';
+            for (var i = 0; i < 6; i++) {
+                html += '<span>&nbsp;</span>';
+            }
+            this._element.innerHTML = html;
+            this._slots = this._element.getElementsByTagName('span');
+            this._tick();
+        };
+        let days = [
+            "Bazar",
+            "Bazar ertəsi",
+            "Çərşənbə axşsamı",
+            "Çərşənbə",
+            "Cümə axşamı",
+            "Cümə",
+            "Şənbə"
+        ];
+        day=document.getElementById("day");
+        exports.prototype = {
+
+            _tick: function () {
+                var time = new Date();
+                day.textContent = days[time.getDay()];
+                
+              
+                this._update(this._pad(time.getHours()) + this._pad(time.getMinutes()) + this._pad(time.getSeconds()));
+                var self = this;
+                setTimeout(function () {
+                    self._tick();
+                }, 1000);
+
+                
+
+               
+
+
+               
+            },
+
+            _pad: function (value) {
+                return ('0' + value).slice(-2);
+            },
+
+            _update: function (timeString) {
+
+                var i = 0, l = this._slots.length, value, slot, now;
+                for (; i < l; i++) {
+
+                    value = timeString.charAt(i);
+                    slot = this._slots[i];
+                    now = slot.dataset.now;
+
+                    if (!now) {
+                        slot.dataset.now = value;
+                        slot.dataset.old = value;
+                        continue;
+                    }
+
+                    if (now !== value) {
+                        this._flip(slot, value);
+                    }
+                }
+            },
+
+            _flip: function (slot, value) {
+
+                // setup new state
+                slot.classList.remove('flip');
+                slot.dataset.old = slot.dataset.now;
+                slot.dataset.now = value;
+
+                // force dom reflow
+                slot.offsetLeft;
+
+                // start flippin
+                slot.classList.add('flip');
+
+            }
+
+        };
+
+        return exports;
+    }());
+
+    var i = 0, clocks = document.querySelectorAll('.clock'), l = clocks.length;
+    for (; i < l; i++) {
+        new Clock(clocks[i]);
+    }
+
+</script>

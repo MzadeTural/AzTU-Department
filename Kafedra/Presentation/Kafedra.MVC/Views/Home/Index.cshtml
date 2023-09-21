@@ -1,0 +1,204 @@
+@using Kafedra.Application.ViewModel.Home
+@model HomeVM
+@{
+    ViewData["Title"] = "Ana Səhifə";
+    int sliderNum = 0;
+    
+    int slidercount = 0;
+    string truncatedContent;
+}
+
+<div class="welcome-carousel">
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade z-depth-1-half"
+         data-bs-ride="carousel">
+        <div class="carousel-indicators">
+
+            @foreach (var item in Model.Sliders)
+            {
+                <button type="button" class="@(slidercount==0 ? "active" : " ")" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="@slidercount"
+                    aria-label="Slide @slidercount+1"></button>
+                slidercount++;
+            }
+
+        </div>
+        <div class="carousel-inner">
+            @foreach (var slider in Model.Sliders)
+            {
+                <div class="carousel-item @(sliderNum<1 ? "active" : " ")">
+                    <img src="~/assets/img/@slider.Image" class="d-block w-100 darkened-image" data-bs-interval="100"
+                     alt="..." />
+                    <div class="carousel-caption">
+                        <p>Kompüter Texnologiyaları <br> kafedrasına xoş gəlmisiniz!</p>
+                    </div>
+                </div>
+                sliderNum++;
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+
+
+
+<div class="events-section section">
+    <div class="container">
+        <div class="section-head">
+            <div class="section-head-name">
+                <h3>Tədbirlər</h3>
+            </div>
+            <div class="section-head-more">
+                <a asp-controller="Event" asp-action="Index">
+                    Bütün tədbirlər
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="events">
+                <div class="row">
+                    @foreach (var @ev in Model.Events)
+                    {
+                        <div class="news-card">
+                            <a  class="news-card__card-link"></a>
+                            <img src="~/uploads/events/@ev.Image"
+                             alt=""
+                             class="news-card__image" />
+                            <div class="news-card__text-wrapper">
+                                <h2 class="news-card__title">
+                                    @ev.Title
+                                </h2>
+                                <div class="news-card__post-date">@ev.CreatedAt</div>
+                                <div class="news-card__details-wrapper">
+                                    <p class="news-card__excerpt">
+                                        @if (ev.Content.Length <= 100)
+                                        {
+                                           
+                                                @Html.Raw(ev.Content)
+                                            
+                                        }
+                                        else
+                                        {
+                                            string tag = ev.Content.Substring(0, 1);
+                                            string tag2 = ev.Content.Substring(1, 2);
+                                            string tag3 = tag + "/" + tag2;
+                                             truncatedContent = ev.Content.Substring(0, 100)+"..." + tag3;
+                                            
+                                                @Html.Raw(truncatedContent)
+                                            
+
+                                        }
+                                    </p>
+                                    <a asp-controller="Event" asp-action="Detail" asp-route-id="@ev.Id" class="news-card__read-more">
+                                        Read more <i class="fas fa-long-arrow-alt-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Event != null)
+                    {
+                        <div class="news-card">
+                            <a  asp-action="Detail" asp-controller="Event" class="news-card__card-link"></a>
+                            <img src="~/assets/img/@Model.Event.Image"
+                             alt=""
+                             class="news-card__image" />
+                            <div class="news-card__text-wrapper">
+                                <h2 class="news-card__title">
+                                    @Model.Event.Title
+                                </h2>
+                                <div class="news-card__post-date">@Model.Event.CreatedAt</div>
+                                <div class="news-card__details-wrapper">
+                                    <p class="news-card__excerpt">
+                                        @Model.Event.Content
+                                    </p>
+                                    <a href="#" class="news-card__read-more">
+                                        Read more <i class="fas fa-long-arrow-alt-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- <p class="fw-bolder fs-1 text-primary text-center">No news found =(</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="announcements-section section">
+    <div class="container">
+        <div class="section-head">
+            <div class="section-head-name">
+                <h3>Elanlar</h3>
+            </div>
+            <div class="section-head-more">
+                <a href="#">Bütün elanlar >></a>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="row">
+                @foreach (var announcement in Model.Announcements)
+                {
+                    <div class="col-lg-3 col-md-6" >
+                        <div class="announcement ann-test">
+                            <div class="ann-layer"></div>
+                            <div class="ann-link">
+                                <a ><span class="ann-link-details">Ətraflı</span></a>
+
+                            </div>
+                            <div class="announcement-top">
+                                <i class="fa-regular fa-calendar-days"></i>
+                                <span class="date">@announcement.UpdatedAt.Hour:@announcement.UpdatedAt.Minute / @announcement.UpdatedAt.Day.@announcement.UpdatedAt.Month.@announcement.UpdatedAt.Year</span>
+                            </div>
+                            <div class="announcement-body">
+                                <div class="announcement-title">
+                                    <a href="#">@announcement.Title</a>
+                                </div>
+                                <div class="announcement-about">
+                                    <p>
+                                        @(announcement.Content.Length<=100?announcement.Content:announcement.Content.Substring(0,100)+"...")
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="connections-section section">
+    <div class="container">
+        <div class="section-head">
+            <div class="section-head-name">
+                <h3>Əlaqələr</h3>
+            </div>
+            <div class="section-head-more">
+                <a href="#">Bütün əlaqələr >></a>
+            </div>
+        </div>
+        <div class="owl-carousel">
+            @foreach (var partner in Model.Partners)
+            {
+                <div class="item">
+                    <a href="#">
+                        <img src="~/assets/img/@partner.Image"
+                         alt="" />
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

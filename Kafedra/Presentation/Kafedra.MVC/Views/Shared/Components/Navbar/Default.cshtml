@@ -1,0 +1,115 @@
+﻿@using Kafedra.Application.Utilities.Enums;
+@using Kafedra.Domain.Enums;
+@using Kafedra.Persistence.Concretes.Services;
+
+@inject LayoutServices service
+@model Dictionary<string,string>
+@{
+    Layout = null;
+    Dictionary<string, string> settings = service.GetSetting();
+}
+
+<div class="container">
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <img src="~/assets/img/@settings[SettingKeysEnum.Brand_Logo_image.ToString()]"
+                     style="width: 5.5rem"
+                     id="aztulogo"
+                     alt="logo" />
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span><i class="fa-solid fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="About" asp-action="Index">Haqqımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" asp-controller="ScientificWorks" asp-action="Index">Elmi işlərimiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Team" asp-action="Index">Heyət</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Subject" asp-action="Index">Fənlər</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Contact" asp-action="Index">Əlaqə</a>
+                    </li>
+
+          
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if(User.IsInRole(UserRoles.Teacher.ToString()))
+                        {
+                            <a class="nav-link text-white" asp-action="Index" asp-controller="Teacher">
+                                <p class="text-center"><i class="fas fa-user"></i></p>
+                                <p id="username"
+                                   class="text-center d-block w-100 mt-1"
+                                   style="font-size: 10px">
+                                    @User.Identity.Name
+                                </p>
+                                <p id="usersurname"
+                                   class="text-center d-block w-100 mt-1"
+                                   style="font-size: 10px">
+
+                                </p>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="nav-link text-white">
+                                <p class="text-center"><i class="fas fa-user"></i></p>
+                                <p id="username"
+                                   class="text-center d-block w-100 mt-1"
+                                   style="font-size: 10px">
+                                    @User.Identity.Name
+                                </p>
+                                <p id="usersurname"
+                                   class="text-center d-block w-100 mt-1"
+                                   style="font-size: 10px">
+
+                                </p>
+                            </a>
+                        }
+                       
+                        <a class="nav-link text-white" asp-action="LogOut" asp-controller="Account">
+                            <p class="text-center w-100"><i class="fas fa-sign-out"></i></p>
+                            <p id="signout"
+                           class="text-center d-block w-100 mt-1"
+                           style="font-size: 10px">
+                                Çıxış
+                            </p>
+                        </a>
+
+                    }
+                    else
+                    {
+                        <a class="nav-link text-white" asp-controller="Account" asp-action="Login">
+                            <p class="text-center w-100">
+                                <i class="fas fa-sign-in"
+                               id="login-logo"
+                               style="font-size: 1.5rem"></i>
+                            </p>
+                            <p id="login"
+                           class="text-center w-100 mt-1 login login-top"
+                           style="font-size: 14px">
+                                Daxil ol
+                            </p>
+                        </a>
+                    }
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

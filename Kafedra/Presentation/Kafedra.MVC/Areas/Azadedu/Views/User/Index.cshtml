@@ -1,0 +1,296 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- component -->
+@using Kafedra.Application.DTOs.Users;
+@model List<UsersGetDto>
+
+
+    <style>
+    .sticky {
+        position: fixed;
+        top: 0; /* or bottom: 0; if you want to stick to the bottom */
+        z-index: 10;
+        width: 87% !important;
+    }
+
+    .sticky-button {
+        position: fixed !important;
+        left: 12% !important;
+        z-index: 11 !important;
+    }
+
+    .sticky-search {
+        position: fixed !important;
+        z-index: 11;
+    }
+
+    .search-box {
+        width: fit-content;
+        height: fit-content;
+        position: absolute;
+        right: 2%;
+         top: 24px;
+        
+    }
+
+    .input-search {
+        height: 50px;
+        width: 50px;
+        border-style: none;
+        padding: 10px;
+        font-size: 18px;
+        letter-spacing: 2px;
+        outline: none;
+        border-radius: 25px;
+        transition: all .5s ease-in-out;
+        background-color: #22a6b3;
+        padding-right: 40px;
+        color: #fff;
+    }
+
+        .input-search::placeholder {
+            color: rgba(255,255,255,.5);
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 100;
+        }
+
+    .btn-search {
+        width: 50px;
+        height: 50px;
+        border-style: none;
+        font-size: 20px;
+        font-weight: bold;
+        outline: none;
+        cursor: pointer;
+        border-radius: 50%;
+        position: absolute;
+        right: 0px;
+        color: #ffffff;
+        background-color: transparent;
+        pointer-events: painted;
+    }
+
+        .btn-search:focus ~ .input-search {
+            width: 300px;
+            border-radius: 0px;
+            border-radius: 10px;
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,.5);
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+        }
+
+    .input-search:focus {
+        width: 300px;
+        border-radius: 0px;
+        border-radius: 10px;
+        background-color: transparent;
+        border: 1px solid rgba(255,255,255,.5);
+        transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+    }
+
+    .action-td {
+        display: flex;
+        height: 252px;
+        position: relative;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+    .btn-create {
+        color: white;
+        position: absolute;
+        background: #32de84;
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        /* text-align: center; */
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        left: 2%;
+        top: 24px;
+    }
+
+        .btn-create:hover {
+            color: white;
+        }
+
+    #statusElement {
+        width: 4rem;
+    }
+        tr{
+        text-align: center;
+        }
+        td{
+        vertical-align: middle !important
+        }
+    </style>
+<div class="content-wrapper">
+@*    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12 d-flex">
+                    <div class="col-sm-12" style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                       
+                        <a style="pos" asp-action="Create" class="btn btn-app bg-success">
+                            <i class="fas fa-solid fa-plus"></i> Create
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>*@
+    <section class="content  my-2">
+    <div class="container-fluid">
+        <div class="row">
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+                            <div style="display: contents;">
+                                <a asp-action="Create" class="btn-create">
+                                    <i class="fas fa-solid fa-plus"></i>
+                                </a>
+                                <h1 id="sticky-bar" style="    background: #0E205B;
+                                    color: white;
+                                    padding: 5px;
+                                    border-radius: 10px;
+                                     text-align:center ;width:100%   ">
+                                    Events
+                                </h1>
+                                <div class="search-box">
+                                    <button class="btn-search"><i class="fas fa-search"></i></button>
+                                    <input type="text" id="searchInput" class="input-search" placeholder="Başlığa görə axdarın...">
+                                </div>
+                            </div>
+           
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                User
+                            </th>
+                            <th>
+                                Full name
+                            </th>
+                            <th>
+                                Email 
+                            </th>
+                            <th>
+                                Father Name
+                            </th>
+                            <th>
+                                Role
+                            </th>
+                            <th>
+                                Action
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>
+                                   @if (user.User.IsActivated)
+                                    {
+                                        <span class="btn btn-success">
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-danger">
+                                            Passive
+                                        </span>
+
+                                    }
+                                </td>
+                                <td class="py-1">
+                                                    <img style="width: 40px;height: 40px;border-radius: 100%;margin-top: 15%;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLe5PABjXc17cjIMOibECLM7ppDwMmiDg6Dw&usqp=CAU" alt="image" />
+                                </td>
+                                <td>
+                                    @user.User.Name @user.User.Surname
+                                </td>
+                                <td>
+                                    @user.User.Email
+                                </td>
+                                <td>
+                                    @user.User.FatherName
+                                </td>
+                                <td>
+                                    @string.Join(", ", user.Roles)
+                                </td>
+                                                <td>
+                                                <a asp-action="edit" asp-route-id="@user.User.Id" data-toggle="tooltip" data-placement="top" title="Redaktə et" class="btn btn-outline-dark">
+                                                        <i class="fa-solid fa-user-pen"></i>
+                                                </a>
+                                                <a asp-action="Remove" asp-route-id="@user.User.Id" data-toggle="tooltip" data-placement="top" title="Sil" class="btn btn-outline-dark btn-delete-sweet">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </a>
+                                                    <a asp-action="Remove" asp-route-id="@user.User.Id" data-toggle="tooltip" data-placement="top" title="Sil" class="btn btn-outline-dark btn-delete-sweet">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </a>
+                                                    <a asp-action="Remove" asp-route-id="@user.User.Id" data-toggle="tooltip" data-placement="top" title="Sil" class="btn btn-outline-dark btn-delete-sweet">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </a>
+                                                </td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+                                   
+                </table>
+              
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+    </section>
+</div>
+    <script>
+    const titleBar = document.getElementById('sticky-bar');
+    const createBtn = document.getElementsByClassName('btn-create')[0];
+    const searchBtn = document.getElementsByClassName('search-box')[0];
+    // Get the initial offset position of the title bar
+    const initialOffset = titleBar.offsetTop;
+
+    // Function to handle the scroll event
+    function handleScroll() {
+        if (window.pageYOffset > initialOffset) {
+            // Add a class to make the title bar sticky
+            titleBar.classList.add('sticky');
+            createBtn.classList.add('sticky-button');
+            searchBtn.classList.add('sticky-search');
+
+
+        } else {
+            // Remove the class to revert to the original position
+            titleBar.classList.remove('sticky');
+            createBtn.classList.remove('sticky-button');
+            searchBtn.classList.remove('sticky-search');
+        }
+
+    }
+
+    // Add a scroll event listener to the window
+    window.addEventListener('scroll', handleScroll);
+
+</script>
+
+
+

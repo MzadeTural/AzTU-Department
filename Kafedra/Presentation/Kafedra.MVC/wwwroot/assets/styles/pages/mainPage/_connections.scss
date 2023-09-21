@@ -1,0 +1,18 @@
+.connections-section {
+    .owl-carousel {
+        .item {
+            // display: flex;
+            // justify-content: center;
+            max-width: 18vh !important;
+        }
+
+        a {
+            width: 100%;
+        }
+
+        img {
+            max-width: 18vh !important;
+            // margin: 0;
+        }
+    }
+}

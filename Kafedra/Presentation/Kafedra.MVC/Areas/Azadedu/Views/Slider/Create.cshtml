@@ -1,0 +1,100 @@
+﻿
+
+
+@using Kafedra.Application.ViewModel.SliderVM
+@model CreateSliderVM
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+    <style type="text/css" >
+    #img-preview {
+        /*display: none;*/
+        height: 14.5rem;
+        width: 23rem;
+        border: 2px dashed #333;
+        margin-bottom: 20px;
+        background-image:url()
+    }
+
+    #img-preview img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
+
+
+                        <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12" style="padding: 20px; display: flex; justify-content: center; align-items: center;">
+                    <h1>Add Slider</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-lg-12"> 
+                            <form method="post" enctype="multipart/form-data">
+
+                                <div class="mb-3" id="img-preview">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nf-name" asp-for="Photo" class=" form-control-label">Select Images</label>
+                                    <input asp-for="Photo" id="choose-file" class="form-control btn btn-dark " autocomplete="off" accept="image/*">
+                                    <span class="text-danger" asp-validation-for="Photo"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-outline-dark">Submit</button>
+                              <a asp-action="Index" class="btn btn-danger m-2 p-2" style="border-radius:15px;">
+                        <i class="fa fa-ban"></i> Cancel
+                    </a>
+                                </div>
+                              
+                                
+                               
+
+                               
+
+                               
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+    const chooseFile = document.getElementById("choose-file");
+    const imgPreview = document.getElementById("img-preview");
+    chooseFile.addEventListener("change", function () {
+        getImgData();
+    });
+    function getImgData() {
+        const files = chooseFile.files[0];
+        if (files) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(files);
+            fileReader.addEventListener("load", function () {
+                imgPreview.style.display = "block";
+                imgPreview.innerHTML = '<img src="' + this.result + '" />';
+            });
+        }
+    }
+</script>
+
+

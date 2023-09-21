@@ -1,0 +1,56 @@
+﻿@using Kafedra.Domain.Entities;
+@model List<Event>
+@{
+    int count = ViewBag.Count;
+    ViewData["Title"] = "AllEvent";
+}
+
+<div class="page-head">
+    <img src="~/assets/img/default-cover.jpg" alt="" />
+    <p>All News</p>
+</div>
+
+<div class="container py-5">
+    <div class="my-3 row" id="additional-data-container">
+        <partial name="_EventPartial" />
+    </div>
+    <div id="loading-animation" style="display: none; justify-content: center;">
+        <!-- Add your loading animation here -->
+        <img src="~/assets/img/loading.svg" />
+    </div>
+
+    <div class="row my-5 justify-content-center" id="more_btn">
+        <button id="load-more-button" class="btn btn-primary">Daha çox göstər...</button>
+        <p id="no-more-data" style="display: none" class="lead-description text-center">Daha çox nəticə tapılmadı</p>
+        
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+    var page = @count // Initial page number
+
+        $("#load-more-button").click(function () {
+            $('#loading-animation').css('display', 'flex');
+            $.ajax({
+                url: "/Event/LoadMore?page=" + page,
+                method: "GET",
+                success: function (data) {
+                    $("#loading-animation").hide();
+                    if (data.length > 0) {
+                        $("#additional-data-container").append(data);
+
+                        page += @count
+                        }
+                    else {
+                        $('#load-more-button').hide(); // Hide the button when there's no more data
+                        $('#no-more-data').show();
+                     
+                    }
+                    console.log(data)
+                    // Increment page number for the next request
+                }
+            });
+
+        });
+</script>

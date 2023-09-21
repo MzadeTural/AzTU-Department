@@ -1,0 +1,25 @@
+﻿@using Kafedra.Domain.Entities;
+@model List<Event>
+@foreach (var ev in Model)
+{
+    <div class="news-card">
+        <a href="#" class="news-card__card-link"></a>
+        <img src="~/uploads/events/@ev.Image"
+             alt=""
+             class="news-card__image" />
+        <div class="news-card__text-wrapper">
+            <h2 class="news-card__title">
+                @ev.Title
+            </h2>
+            <div class="news-card__post-date">Jan 29, 2018</div>
+            <div class="news-card__details-wrapper">
+                <p class="news-card__excerpt">
+                    @ev.Content
+                </p>
+                <a asp-controller="Event" asp-action="Detail" asp-route-id="@ev.Id" class="news-card__read-more">
+                    Read more <i class="fas fa-long-arrow-alt-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+}

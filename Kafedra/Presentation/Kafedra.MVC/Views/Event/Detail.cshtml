@@ -1,0 +1,58 @@
+﻿
+@using Kafedra.Domain.Entities;
+@model Event
+@{
+    ViewData["Title"] = "Detail";
+}
+<div class="page-head">
+    <img src="~/assets/img/default-cover.jpg" alt="" />
+    <p> @Model.Title</p>
+</div>
+<div class="container my-5">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="event-page">
+            <p class="evee-header">
+              <a asp-controller="Home" asp-action="Index">Ana səhifə</a> > <a asp-controller="Event" asp-action="AllEvents"> Elanlar </a> > @Model.Title
+            </p>
+            <div class="event-header">
+              <h2>
+                @Model.Title
+              </h2>
+            </div>
+            <div class="event-date-view">
+              <div class="event-date">
+                <i class="fa-solid fa-calendar-days"> </i>@Model.CreatedAt
+              </div>
+
+              <div class="event-view"><i class="fa-solid fa-eye"> </i>123</div>
+            </div>
+            <div class="event-header-image">
+              <img src="~/uploads/events/@Model.Image" alt="" />
+            </div>
+            <div class="event-description">
+                   @Html.Raw(Model.Content)
+              
+            </div>
+            <div class="event-info">
+              <div class="subject">
+                <strong>Mövzu: </strong>@Model.Title
+              </div>
+              <div class="date">
+                <strong> Tarix: </strong>@Model.CreatedAt
+              </div>
+              <div class="locaion">
+                <strong> Məkan: </strong>Əsas korpus, böyük akt zalı
+              </div>
+            </div>
+            <div class="event-social">
+              <a href="#"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+

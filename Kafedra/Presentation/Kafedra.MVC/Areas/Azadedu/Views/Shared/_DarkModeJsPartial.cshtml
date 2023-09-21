@@ -1,0 +1,139 @@
+﻿<script>
+
+    // Function to toggle dark mode
+    
+     
+    let ckeditors = document.querySelectorAll(".ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline");
+    let tests = document.querySelectorAll(".ck.ck-editor__main>.ck-editor__editable");
+
+    tests.forEach((test) => {
+        test.addEventListener('blur', () => {
+            let isDarkMode = localStorage.getItem('dark-mode');
+            if (isDarkMode == 'true') {
+                console.log(isDarkMode);
+                test.style.background = "#454d55!important";
+
+
+            }
+        });
+
+    });
+    ckeditors.forEach((editor) => {
+
+       
+        editor.addEventListener('focus', () => {
+            let isDarkMode = localStorage.getItem('dark-mode');
+            if (isDarkMode=='true') {
+                console.log(isDarkMode);              
+                    editor.style.background = "#454d55";
+              
+                
+            }
+        });
+       
+    });
+   
+    
+   
+    function toggleDarkMode() {
+        const setingCard = document.getElementById("SettingCard");
+        const ckeditors = document.getElementsByClassName("ck ck-content");
+        const ckeditorsBlur = document.querySelectorAll(".ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred");
+        const ckeditorsFocus = document.querySelectorAll(".ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-focused");
+        const nav = document.getElementById("MainNav");
+        const body = document.body;
+        const isDarkMode = body.classList.contains('dark-mode');
+        const isDarkNav = body.classList.contains('bg-light');
+        const pagCard = document.getElementById('PagNav');
+
+
+        
+        // Toggle the "dark-mode" class on the body
+        if (isDarkMode) {
+            body.classList.remove('dark-mode');
+            if (setingCard !== null) {
+                setingCard.classList.remove('dark-mode')
+            }
+            
+            nav.classList.remove('bg-light');
+            
+
+            if (pagCard !== null) {
+                pagCard.classList.remove('dark-mode');
+            }
+            for (let i = 0; i < ckeditors.length; i++) {
+                ckeditors[i].style.background = "var(--ck-color-base-background)";
+               
+                
+            }
+           
+        } else {
+            for (let i = 0; i < ckeditors.length; i++) {
+                ckeditors[i].style.background = "#454d55";
+                
+                   
+            }
+            
+            if (setingCard !== null) {
+                setingCard.classList.add('dark-mode');
+            }
+            body.classList.add('dark-mode');
+            nav.classList.add('bg-light');
+            if (pagCard !== null) {
+                pagCard.classList.add('dark-mode');
+            }
+        }
+
+        // Store the user's preference in local storage
+        localStorage.setItem('dark-mode', !isDarkMode);
+        localStorage.setItem('bg-light', !isDarkNav);
+    }
+    // Initialize the dark mode state based on user preference in local storage
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+    function initializeDarkMode() {
+     
+
+
+        const ckeditors = document.getElementsByClassName("ck ck-content");
+        
+        const setingCard = document.getElementById("SettingCard");
+        const body = document.body;
+        const nav = document.getElementById("MainNav");
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        const pagCard = document.getElementById('PagNav');
+        if (isDarkMode) {
+            for (let i = 0; i < ckeditors.length; i++) {
+                ckeditors[i].style.background = "#454d55 ";
+                            
+            }
+           
+            if (setingCard !== null) {
+                setingCard.classList.add('dark-mode');
+            }
+            body.classList.add('dark-mode');
+            nav.classList.add('bg-light');
+            if (pagCard !== null) {
+                pagCard.classList.add('dark-mode');
+            }
+
+        }
+        
+
+    }
+    // Add event listener to the dark mode toggle switch
+    initializeDarkMode();
+
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('change', toggleDarkMode);
+    }
+    function init() {
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        darkModeToggle.checked = isDarkMode;
+    }
+
+    window.onload = init();
+
+            // Initialize dark mode when the page loads
+
+</script>

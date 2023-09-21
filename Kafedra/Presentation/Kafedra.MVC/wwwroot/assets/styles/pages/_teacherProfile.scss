@@ -1,0 +1,113 @@
+.profile-page {
+  .profile-head {
+
+    height: 80vh;
+    background-color: $mainColor;
+    width: 100%;
+
+    .img-col {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-head-photo {
+      // display: inline-block;
+      // margin: 20vh 0;
+      // align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+        border-radius: 500px;
+        border: 10px solid $thirdColor;
+      }
+    }
+
+    // .col-lg-4 {
+    //     display: flex;
+    //     align-items: center;
+    // }
+
+    .profile-head-text {
+      margin: 20vh 0;
+      // display: inline-block;
+
+      .profile-name {
+        font-size: 10vh;
+        color: white;
+      }
+
+      .profile-position {
+        font-size: 5vh;
+        // margin-left: 5px;
+        color: rgba(255, 255, 255, 0.822);
+      }
+
+      .person-contacts {
+        color: white;
+        margin-top: 10px;
+        font-size: 3vh;
+
+        p {
+          margin-bottom: 3px;
+        }
+
+        span {
+          font-weight: 700;
+        }
+
+        a {
+          color: white;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .profile-section {
+    padding: 10vh 0;
+
+    .profile-section-head {
+      color: $secondaryColor;
+      font-size: 5.5vh;
+      margin-bottom: 15px;
+    }
+
+    .profile-section-body {
+      font-size: 3.5vh;
+      color: #666;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .profile-head {
+      height: 125vh;
+    }
+
+    .profile-head-photo {
+      img {
+        width: 80% !important;
+        margin-top: 100px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 575px) {
+    .profile-head-text {
+      padding-left: 35px;
+
+      .profile-name {
+        font-size: 7vh !important;
+      }
+
+      .profile-position {
+        font-size: 4.5vh !important;
+      }
+    }
+  }
+}

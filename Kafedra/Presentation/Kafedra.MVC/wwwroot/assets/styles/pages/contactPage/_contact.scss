@@ -1,0 +1,22 @@
+.contact-page{
+    hr{
+        color: $mainColor;
+    }
+    .contact-list{
+        .item{
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            span{
+                padding-right: 10px;
+                i{
+                    font-size: inherit;
+                    color: $mainColor;
+                }
+            }
+            p{
+                line-height: 1.5;
+            }
+        }
+    }
+}

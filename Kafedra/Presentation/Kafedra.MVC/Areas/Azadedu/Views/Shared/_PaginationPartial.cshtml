@@ -1,0 +1,56 @@
+﻿<nav aria-label="Page navigation example"id="PagNav" class="pag-container d-flex justify-content-center align-items-center ">
+    <ul class="mypagination">
+
+        @if (Model.HasPrev)
+        {
+            if (Model.PageIndex > 2)
+            {
+                <li><a asp-action="index" asp-route-page="1" asp-route-word="@TempData["Word"]">1</a></li>
+            }
+           
+                <li>
+                    <a class="pag-prev" asp-action="index" asp-route-page="@(Model.PageIndex - 1)" asp-route-word="@TempData["Word"]" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            
+        }
+        @for (int i = 1; i <= Model.TotalPage; i++)
+        {
+            if (Model.PageIndex - 1 == i)
+            {
+                <li class=""><a asp-action="index" asp-route-page="@i" asp-route-word="@TempData["Word"]">@i</a></li>
+            }
+
+            if (Model.PageIndex == i)
+            {
+                <li class="pagactive"><a class="pagactive" asp-route-word="@TempData["Word"]" asp-action="index" asp-route-page="@i">@i</a></li>
+            }
+            if (Model.PageIndex + 1 == i)
+            {
+                <li><a asp-action="index" asp-route-page="@i" asp-route-word="@TempData["Word"]">@i</a></li>
+            }
+        }
+        @if (Model.HasNext)
+        {
+            <li>
+                <a class="pag-next" asp-action="index" asp-route-page="@(Model.PageIndex + 1)" asp-route-word="@TempData["Word"]" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+
+            if (Model.TotalPage - 1 > Model.PageIndex)
+            {
+                <li><a asp-action="index" asp-route-page="@Model.TotalPage" asp-route-word="@TempData["Word"]">@Model.TotalPage</a></li>
+            }
+        }
+
+    </ul>
+</nav>
+@section Scripts{
+<script>
+    $("li").click(function () {
+        $(this).addClass("pagactive").siblings().removeClass("pagactive");
+    });
+</script>
+}

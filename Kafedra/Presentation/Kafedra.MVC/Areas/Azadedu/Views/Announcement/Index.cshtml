@@ -1,0 +1,169 @@
+﻿@using Kafedra.Application.ViewModel.Home;
+@model PagenatedListDto<Announcement>
+@{
+    ViewData["Title"] = "Index";
+    int index = 1;
+    int count = (Model.PageIndex - 1) * Model.PageSize + 1;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12 d-flex">
+                    <div class="col-sm-12" style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <h1 style="    background: #0E205B;
+                                    color: white;
+                                    padding: 5px;
+                                    border-radius: 10px;">
+                            Announcement
+                        </h1>
+                        <a style="pos" asp-action="Create" class="btn btn-app bg-success">
+                            <i class="fas fa-solid fa-plus"></i> Create
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+               
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @if (Model.HasItems)
+                            {
+                                <table class="table table-striped projects">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                             <th>#</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                        <th>Update-Date</th>
+                                        <th>Status</th>
+                                        <th>Content</th>
+                                        <th>Actions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @foreach (var item in @Model)
+                                        {
+                                            <tr data-widget="expandable-table" aria-expanded="false">
+                                                <td>@index</td>
+                                                <td>@item.Title</td>
+                                                <td>@item.CreatedAt</td>
+                                                @if (@item.CreatedAt == @item.UpdatedAt)
+                                                {
+                                                    <td><span class="badge bg-warning">No Update</span></td>
+                                                }
+                                                else
+                                                {
+
+                                                    <td>@item.UpdatedAt</td>
+
+                                                }
+                                                @if (item.IsDeleted == true)
+                                                {
+                                                    <td><span class="badge bg-danger">Passive</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                }
+                                                <td>@item.Content</td>
+
+
+
+                                                <td style="display:flex">
+
+                                                    <a class="btn btn-app bg-info" asp-action=Edit asp-controller=Announcement asp-route-id=@item.Id>
+
+                                                        <i class="fas fa-regular fa-pen-to-square"></i> Edit
+                                                    </a>
+
+
+                                                    <form asp-action=Delete method="post">
+                                                        <a type="submit" class="btn btn-app bg-danger btn-delete-sweet" asp-action=Delete asp-controller=Announcement asp-route-id=@item.Id>
+                                                            <i class="fas fa-solid fa-x"></i>
+                                                            UnInstall
+                                                        </a>
+                                                    </form>
+
+
+                                                    <form asp-action=ActivOrUnactiv method="post">
+                                                        @if (item.IsDeleted == false)
+                                                        {
+                                                            <button type="submit" class="btn btn-app bg-warning " style="color:white !important" asp-route-page="@Model.PageIndex" asp-action=ActivOrUnactiv asp-controller=Announcement asp-route-id=@item.Id>
+
+                                                                <i class="fas fa-solid fa-trash"></i>Remove
+
+
+
+
+                                                            </button>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <button type="submit" class="btn btn-app bg-success " style="color:white !important" asp-route-page="@Model.PageIndex" asp-action=ActivOrUnactiv asp-controller=Announcement asp-route-id=@item.Id>
+
+                                                                <i class="fas fa-solid fa-trash-arrow-up"></i>Restore
+
+
+
+
+                                                            </button>
+                                                        }
+                                                    </form>
+
+                                                </td>
+                                            </tr>
+                                            index++;
+                                        }
+
+
+
+                                    </tbody>
+
+                                </table>
+                            }
+
+                            else
+                            {
+                                @await Html.PartialAsync("_NoResultItemPartial")
+
+                            }
+
+                            @await Html.PartialAsync("_PaginationPartial")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+    <script src="~/manage/main.js"></script>
+
+}
+<!-- /.card -->
+@section ScriptModal{
+    @*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/manage/Modal/AlertModal.js"></script>
+    }

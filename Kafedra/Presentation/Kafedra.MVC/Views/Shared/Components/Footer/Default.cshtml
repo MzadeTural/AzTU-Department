@@ -1,0 +1,107 @@
+﻿@using Kafedra.Application.Utilities.Enums;
+@using Kafedra.Persistence.Concretes.Services;
+@inject LayoutServices service
+@{
+    Layout = null;
+
+    Layout = null;
+    Dictionary<string, string> settings = service.GetSetting();
+}
+@model Dictionary<string,string>
+        <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="footer-uni-logo">
+                    <img src="~/assets/img/@settings[SettingKeysEnum.Footer_Logo_image.ToString()]" alt="aztulogo" />
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="footer-top-middle">
+                <div class="footer-social">
+                  <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                  <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                  <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                  <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
+                  <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+                <div class="footer-adress">
+                  <p>
+                            @Html.Raw(settings[SettingKeysEnum.Footer_Adress.ToString()])
+                  </p>
+                </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="footer-connect">
+                    <div class="d-flex justify-content-end">
+                        <p>Tel: @Html.Raw(settings[SettingKeysEnum.Phone_Number.ToString()])</p>
+                    </div>
+                <p>Qaynar xətt: (+994 12) 539-13-05</p>
+                <div class="d-flex justify-content-end">
+                        <p>E-poçt: @Html.Raw(settings[SettingKeysEnum.Footer_Mail.ToString()])</p>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="footer-copyright">
+            <p>
+              Copyright Ⓒ 2022 Azərbaycan Texniki Universiteti. Bütün Hüquqlar
+              Qorunur.
+            </p>
+          </div>
+        </div>
+      </div>
+<script>
+    window.onscroll = () => {
+        if (
+            document.body.scrollTop > 80 ||
+            document.documentElement.scrollTop > 120
+        ) {
+            //asagida
+            document.getElementById("header").style.backgroundColor =
+                "rgb(14, 32, 91)";
+            document.getElementById("header").style.boxShadow =
+                "0px 0px 10px 0px rgb(0, 0, 0)";
+            //Logo
+            document.getElementById("aztulogo").src = "/assets/img/@settings[SettingKeysEnum.Brand_Logo_Second_image.ToString()]";
+            document.getElementById("aztulogo").style.width = "5.5rem";
+
+            var signout = document.getElementById("signout");
+            if (signout != null) {
+                signout.style.fontSize = "14px";
+                document.getElementById("username").style.fontSize = "14px";
+                document.getElementById("usersurname").style.fontSize = "14px";
+            } else {
+                document.getElementById("login").classList.remove("login-top");
+                document.getElementById("login").classList.add("login-bot");
+                document.getElementById("login").style.display = "none";
+                document.getElementById("login-logo").style.fontSize = "2rem";
+            }
+        } else {
+            //yuxarida
+            document.getElementById("header").style.backgroundColor =
+                "transparent";
+            document.getElementById("header").style.boxShadow = "none";
+            //Logo
+            document.getElementById("aztulogo").src = "/assets/img/ktk-big-logo.png";
+            document.getElementById("aztulogo").style.width = "8rem";
+
+            var signout = document.getElementById("signout");
+            if (signout != null) {
+                document.getElementById("username").style.fontSize = "12px";
+                document.getElementById("usersurname").style.fontSize = "12px";
+                document.getElementById("signout").style.fontSize = "12px";
+            } else {
+                document.getElementById("login").classList.add("login-top");
+                document.getElementById("login").classList.remove("login-bot");
+                document.getElementById("login").style.display = "block";
+                document.getElementById("login-logo").style.fontSize = "1.5rem";
+            }
+        }
+    };
+</script>

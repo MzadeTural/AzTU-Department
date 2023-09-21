@@ -1,0 +1,193 @@
+.announcements-section {
+    .announcement {
+        margin-bottom: 20px;
+        background: none;
+        transition: color 0.8s linear;
+        position: relative;
+        &:hover{
+            cursor: pointer;
+            .announcement-top{
+                color: white;
+                position: relative;
+                z-index: 2;
+            }
+            .announcement-body{
+               
+                .announcement-title{
+                    a{
+                      color: white;
+                      position: relative;
+                      z-index: 2;
+                    }
+                }
+                .announcement-about{
+                    p{
+                        color: white;
+                        position: relative;
+                        z-index: 2;
+                    }
+                }
+            }
+        }
+        &::before{
+            content: "";
+            position: absolute;
+            left: 0%;
+            top: 0%;
+            width: 100%;
+            height: 100%;
+            background: $secondaryColor;
+            z-index: 1;
+            transition: transform 0.8s;
+            transform-origin: 0 0;
+            transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
+            transform: scaleY(0);
+        }
+        &:hover::before{
+            transform: scaleY(1);
+        }
+
+        .ann-link-details {
+            display: none;
+        }
+
+        // height: 160px;
+
+        .announcement-top {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            background-color: $secondaryColor;
+            padding: 10px 10px;
+            font-weight: 600;
+            width: 100%;
+            align-items: center;
+
+            i {
+                font-size: 1.5em;
+            }
+        }
+
+        .announcement-body {
+            background-color: #fff;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 15%);
+            padding: 20px;
+            height: auto;
+        }
+
+        .announcement-title {
+            color: $mainColor;
+            font-weight: 700;
+            font-size: 3vh;
+            margin-bottom: 10px;
+            a{
+                text-decoration: none;
+                color: $mainColor;
+            }
+        }
+
+        .announcement-about {
+            color: #666;
+        }
+
+        transition: .25s;
+
+        // &:hover {
+        //     position: relative;
+        //     box-shadow: 0px 30px 20px rgba(0, 0, 0, 80%);
+
+        //     .ann-layer {
+        //         width: 100%;
+        //         background-color: $secondaryColor;
+        //         height: 100%;
+        //     }
+
+        //     .ann-link {
+        //         position: absolute;
+        //         bottom: 40%;
+        //         left: 40%;
+
+
+        //         .ann-link-details {
+        //             display: block;
+        //             color: white;
+        //             font-size: 4vh;
+        //         }
+        //     }
+
+        //     // .announcement-top {
+        //     //     height: inherit;
+        //     // }
+
+        //     .announcement-body {
+        //         display: none;
+        //     }
+        // }
+    }
+
+    .ann-testttt {
+        position: relative;
+        box-shadow: 0px 30px 20px rgba(0, 0, 0, 80%);
+
+        .ann-layer {
+            width: 100%;
+            background-color: $secondaryColor;
+            height: 100%;
+        }
+
+        .ann-link {
+            position: absolute;
+            bottom: 40%;
+            left: 40%;
+
+            span {
+                color: white;
+                font-size: 4vh;
+            }
+        }
+
+        // .announcement-top {
+        //     height: inherit;
+        // }
+
+        .announcement-body {
+            display: none;
+        }
+    }
+
+//     @media only screen and (min-width:1400px) {
+//         .announcement {
+//             height: 160px !important;
+//         }
+//     }
+
+//     @media only screen and (max-width:1399px) {
+//         .announcement {
+//             height: 175px !important;
+//         }
+//     }
+
+//     @media only screen and (min-width:992px) and (max-width:1199px) {
+//         .announcement {
+//             height: 200px !important;
+
+//             .announcement-title {
+//                 font-size: 2.4vh;
+//             }
+//         }
+//     }
+
+//     @media only screen and (max-width:991px) {
+//         .announcement {
+//             margin-bottom: 80px;
+//             height: 140px !important;
+//         }
+//     }
+
+//     @media only screen and (max-width:575px) {
+//         .announcement {
+//             margin: 30px 20px;
+//             height: 160px !important;
+//         }
+//     }
+}

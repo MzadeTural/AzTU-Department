@@ -1,0 +1,56 @@
+﻿@using Kafedra.Domain.Entities
+@model IEnumerable<Dissertation>
+@{
+    ViewData["Title"] = "Elmi işlər";
+}
+
+ <div class="page-head">
+        <img src="~/assets/img/scientific cover .jpg" alt="Image de naruto usada de fondo">
+        <p>Elmi işlər</p>
+    </div>
+    <div class="page-body scientific-works-page-body">
+        <div class="container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Axtarış">
+                <button type="submit" class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="works">
+                <div class="row">
+                    @foreach (var work in Model)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                        <div class="work">
+                            <div class="work-cover">
+                                <img src="https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg"
+                                    alt="">
+                            </div>
+                            <div class="work-about">
+                                <div class="work-topic mb-1">
+                                    <p>
+                                        <span>Mövzu:</span> @work.Name
+                                    </p>
+
+                                </div>
+                                <div class="work-year mb-1">
+                                    <p>
+                                        <span>İl:</span> blabla ili
+                                    </p>
+                                </div>
+                                <div class="work-authors">
+                                    <p>
+                                        <span>Müəlliflər:</span> Orxan Qənbərov
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="pagination"></div>
+        </div>
+    </div>
+
