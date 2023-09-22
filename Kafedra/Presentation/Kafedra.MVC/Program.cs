@@ -41,22 +41,27 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
+<<<<<<< HEAD
     endpoints.MapHub<SearchHub>("/searchHub"); // Map the hub endpoint
     endpoints.MapHub<ChangeStatusHub>("/statusHub");
+=======
+>>>>>>> 06845fed4d17b74adf02978bda32520a8fbe9a44
     endpoints.MapControllerRoute(
-        name: "areas",
-        pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
-        );
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+    );
+    endpoints.MapHub<SearchHub>("/searchHub"); // Map the hub endpoint
+    endpoints.MapHub<ChangeStatusHub>("/statusHub");
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
