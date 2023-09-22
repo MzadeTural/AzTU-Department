@@ -52,17 +52,28 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
-            var setting = await _settingRepository.GetSingleAsync(x => x.Id == id);
-            int num;
-            if(int.TryParse(setting.Value, out num))
+            var newId = id;
+            Console.WriteLine(newId);
+            return View(new Setting()
             {
-            setting.NumValue = num;
-
-            }
-            return View(setting);
+                Key = "1234",
+                Value = "adf"
+            });
         }
+
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    var setting = await _settingRepository.GetSingleAsync(x => x.Id == id);
+        //    int num;
+        //    if(int.TryParse(setting.Value, out num))
+        //    {
+        //    setting.NumValue = num;
+
+        //    }
+        //    return View(setting);
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

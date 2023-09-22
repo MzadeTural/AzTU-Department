@@ -36,7 +36,6 @@ namespace Kafedra.Business.Services.Implementations
 
         public async Task CreateEventAsync(EventCreateDto createDto, string? time = null)
         {
-
             var timeArr = time.Split("-");
             string format = "dd/MM/yyyy HH:mm";
             DateTime startTime = DateTime.ParseExact(timeArr[0].Trim(), format, CultureInfo.InvariantCulture);
@@ -63,7 +62,7 @@ namespace Kafedra.Business.Services.Implementations
 
         }
 
-        public async void Update(EventEditDto eventEditDto, string fileName, string? time = null)
+        public async Task Update(EventEditDto eventEditDto, string fileName, string? time = null)
         {
             var eventItem = await _eventRepository.GetSingleAsync(x => x.Id == eventEditDto.Id);
              
@@ -71,15 +70,13 @@ namespace Kafedra.Business.Services.Implementations
             string format = "dd/MM/yyyy HH:mm";
             DateTime startTime = DateTime.ParseExact(timeArr[0].Trim(), format, CultureInfo.InvariantCulture);
             DateTime endTime = DateTime.ParseExact(timeArr[1].Trim(), format, CultureInfo.InvariantCulture);
-           eventItem =  _mapper.Map(eventEditDto, eventItem);
+            eventItem =  _mapper.Map(eventEditDto, eventItem);
 
             eventItem.Image = fileName;
             eventItem.StartTime = startTime;
             eventItem.EndTime = endTime;
-            _eventRepository.Update(eventItem);
+            //_eventRepository.Update(eventItem);
             _eventRepository.Save();
-
-         
         }
 
         public async Task<List<Event>> GetAllEvents()

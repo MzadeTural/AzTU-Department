@@ -147,7 +147,7 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
 
                 fileName = await _fileService.UploadAsync(_env.WebRootPath + "/uploads/events/", eventEditDto.ImageFile);
             }
-            _eventService.Update(eventEditDto, fileName, time);
+            await _eventService.Update(eventEditDto, fileName, time);
 
             return RedirectToAction("index");
         }

@@ -13,8 +13,6 @@ namespace Kafedra.Business
     {
         public static void AddBusinessServices(this IServiceCollection services)
         {
-
-
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<ISliderService, SliderService>();

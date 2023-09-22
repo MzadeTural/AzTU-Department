@@ -17,10 +17,7 @@ namespace Kafedra.Persistence.Repositories.Implementations
 
         public Repository(KafedraContext context)
         {
-          
             _context = context;
-              
-            
         }
        
         public DbSet<TEntity> Table => _context.Set<TEntity>();
@@ -36,7 +33,7 @@ namespace Kafedra.Persistence.Repositories.Implementations
 
         public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> exp = null, params string[] includes)
   
-            => await GetQuery(includes).FirstOrDefaultAsync(exp);
+            => await GetQuery(includes).FirstOrDefaultAsync(exp);       
         
 
         public async Task<List<TEntity>> GetWhere(Expression<Func<TEntity, bool>> exp = null, params string[] includes)
@@ -56,9 +53,6 @@ namespace Kafedra.Persistence.Repositories.Implementations
         public void Update(TEntity entity)
           =>Table.Update(entity);
 
-          
-        
-
         public bool Delete(TEntity entity)    
            => Table.Remove(entity).State == EntityState.Deleted;
         
@@ -76,7 +70,7 @@ namespace Kafedra.Persistence.Repositories.Implementations
         public async Task<int> SaveAysnc()
         => await _context.SaveChangesAsync();
         public int Save()
-       =>  _context.SaveChanges();
+        => _context.SaveChanges();
 
         public bool UnActive(TEntity entity)
           => entity.IsDeleted == true;

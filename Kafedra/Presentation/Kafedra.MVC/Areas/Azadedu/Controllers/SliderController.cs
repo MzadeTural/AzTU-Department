@@ -98,14 +98,6 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
         //    }
         //}
 
-
-
-
-
-
-
-
-
         private bool CheckImageValid(CreateSliderVM eventVM)
         {
 
