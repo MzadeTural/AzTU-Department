@@ -75,13 +75,18 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
         {
             if (!ModelState.IsValid)
                 return View(createDto);
-            bool checkImage = _fileService.CheckImageValid(createDto.ImageFile, 10485760, ref _errorMessage, "image/jpeg", "image/png");
-            if (checkImage == false)
+            try
             {
-                ModelState.AddModelError("ImageFile", _errorMessage);
+                await _eventService.CreateEventAsync(createDto, time);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("ImageFile", ex.Message);
+
                 return View(createDto);
             }
-            await _eventService.CreateEventAsync(createDto, time);
+
+           
             return RedirectToAction("index");
         }
 

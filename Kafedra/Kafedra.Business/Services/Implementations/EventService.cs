@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using Kafedra.Application.Abstractions.Storages;
+
 using Kafedra.Application.DTOs;
 using Kafedra.Application.DTOs.EventDTOs;
+using Kafedra.Application.Interfaces.Services.Interfaces;
 using Kafedra.Application.Utilities.Enums;
 using Kafedra.Business.Services.Interfaces;
 using Kafedra.Domain.Entities;
@@ -40,10 +41,9 @@ namespace Kafedra.Business.Services.Implementations
             string format = "dd/MM/yyyy HH:mm";
             DateTime startTime = DateTime.ParseExact(timeArr[0].Trim(), format, CultureInfo.InvariantCulture);
             DateTime endTime = DateTime.ParseExact(timeArr[1].Trim(), format, CultureInfo.InvariantCulture);
-
-
-            string fileName = await _fileService.UploadAsync(_env.WebRootPath + "/uploads/events/", createDto.ImageFile);
-
+           // string fileName = await _fileService.UploadAsync(_env.WebRootPath + "/uploads/events/", createDto.ImageFile);
+            string path = Path.Combine(_env.WebRootPath, "uploads", "sliders");
+            string fileName = await _fileService.CreateFileAsync(createDto.ImageFile, path);
             var newEvent = _mapper.Map<Event>(createDto);
             newEvent.Image = fileName;
             newEvent.StartTime = startTime;
@@ -71,7 +71,7 @@ namespace Kafedra.Business.Services.Implementations
             DateTime startTime = DateTime.ParseExact(timeArr[0].Trim(), format, CultureInfo.InvariantCulture);
             DateTime endTime = DateTime.ParseExact(timeArr[1].Trim(), format, CultureInfo.InvariantCulture);
             eventItem =  _mapper.Map(eventEditDto, eventItem);
-
+          
             eventItem.Image = fileName;
             eventItem.StartTime = startTime;
             eventItem.EndTime = endTime;

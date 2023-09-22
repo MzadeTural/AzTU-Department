@@ -9,6 +9,8 @@ using Kafedra.Application.MappingProfile;
 
 using Kafedra.Business;
 using Kafedra.Infrastructure.Hubs;
+using Kafedra.Application.Interfaces.Services.Interfaces;
+using Kafedra.Application.Interfaces.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,7 @@ builder.Services.AddAutoMapper(typeof(EventMapper));
 builder.Services.AddBusinessServices();
 builder.Services.AddStorageType(StorageType.ILocalStorage);
 builder.Services.AddSignalR();
+builder.Services.AddScoped<IFileService, FileService>();
 
 
 
@@ -48,8 +51,8 @@ app.UseRouting();
 
 app.UseEndpoints(endpoints =>
 {
-    //endpoints.MapHub<SearchHub>("/searchHub"); // Map the hub endpoint
-    //endpoints.MapHub<ChangeStatusHub>("/statusHub");
+    endpoints.MapHub<SearchHub>("/searchHub"); // Map the hub endpoint
+    endpoints.MapHub<ChangeStatusHub>("/statusHub");
     endpoints.MapControllerRoute(
         name: "areas",
         pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"

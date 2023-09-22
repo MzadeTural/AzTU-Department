@@ -334,7 +334,7 @@
                                                   
                                                     @if (item.IsDeleted == false)
                                                     {
-                                                        <button id="success" style="width: 100%;" class="change-status-button btn btn-outline-warning " onclick="sendStatusChangeRequest(@item.Id,@index)" data-toggle="tooltip" data-placement="top" title="Bərpa et">
+                                                        <button id="success" style="width: 100%;" class="change-status-button btn btn-outline-warning " onclick="sendStatusChangeRequest(@item.Id,@index)" data-toggle="tooltip" data-placement="top" title="Kənar et">
                                                                 <i  class="status-icon fas fa-solid fa-trash"></i>
                                                             </button>
                                                     }
@@ -389,13 +389,6 @@
     </script>
     <script>
   
-           
-    
-
-
-
-
-
         const titleBar = document.getElementById('sticky-bar');
         const createBtn=document.getElementsByClassName('btn-create')[0];
         const searchBtn = document.getElementsByClassName('search-box')[0];

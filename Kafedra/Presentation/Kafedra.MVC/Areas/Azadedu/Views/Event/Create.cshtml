@@ -51,7 +51,7 @@
                                         <div class="modal-body">
                                             <h2 class="modal-title">Upload a image</h2>
                                             <p class="modal-description">Attach the file below</p>
-                                            <span asp-validation-for="Title" class="text-danger"></span>
+                                            <span asp-validation-for="ImageFile" class="text-danger"></span>
                                             <div class="upload-area" id="dropArea">
                                                 <span class="upload-area-icon">
                                                     <i class="fa-solid fa-file-arrow-up"></i>
@@ -179,42 +179,24 @@
 
     <script>
 
-          //$('#reservationtime').daterangepicker({
-          //    "autoApply": true,
-          //    "startDate": startDate, // viewda gorsenen baslangic deyer
-          //    "endDate": moment().startOf('hour').add(32, 'hour'), // viewda gorsenen son deyer
-          //    "minDate": startDate, // viewda gorsenen limitin min deyeri
-          //    "maxDate": moment(), // viewda gorsenen limitin max deyeri
-          //    locale: {
-          //        format: 'DD/MM/YYYY'
-          //    }
-          //    }, function(start, end, label) {
-          //      console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-          //});
+         
 
+        var currentdate = new Date();
+        //var startDay = @TempData["StartDay"];
+        //var startMonth = @TempData["StartMonth"];
+        //var startYear = @TempData["StartYear"];
 
-
-        var startDay = @TempData["StartDay"];
-        var startMonth = @TempData["StartMonth"];
-        var startYear = @TempData["StartYear"];
-
-        var startHour = @TempData["StartHour"];
-        var startMin = @TempData["StartMin"];
-
+        //var startHour = @TempData["StartHour"];
+        //var startMin = @TempData["StartMin"];
+        var startDay = currentdate.getDate();
+        var startMonth = currentdate.getMonth()+1;
+       var startYear= currentdate.getFullYear();
 
         var date = startDay + "/" + startMonth + "/" + startYear;
 
         console.log(date);
 
-        //$('input[name="datetimes"]').daterangepicker({
-        //    timePicker: true,
-        //    startDate: date,
-        //    endDate: moment(),
-        //    minDate:date,
-        //    locale: {
-        //        format: 'DD/MM/YYYY hh:mm A'
-        //    }
-        //});
+       
 
         $('#reservationtime').daterangepicker({
             timePicker: true,

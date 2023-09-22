@@ -1,4 +1,6 @@
 ﻿
+using Kafedra.Application.DTOs.SliderDtos;
+using Kafedra.Application.Exceptions;
 using Kafedra.Application.Utilities.File;
 using Kafedra.Application.ViewModel.Home;
 using Kafedra.Application.ViewModel.SliderVM;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace Kafedra.MVC.Areas.Azadedu.Controllers
 {
@@ -53,31 +56,26 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
             }
         }
 
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(CreateSliderVM sliderVM)
-        //{
-        //    if (!ModelState.IsValid) return View(sliderVM);
-        //    if (sliderVM is null) return View();
-        //    if (ModelState["Photo"].ValidationState == ModelValidationState.Invalid) return View(sliderVM);
-        //    if (!CheckImageValid(sliderVM))
-        //    {
-        //        ModelState.AddModelError("Photo", _errorMessage);
-        //        return View(sliderVM);
-        //    }
-        //    string fileName = await sliderVM.Photo.SaveFile(_env.WebRootPath, "assets", "img");
-        //    await _sliderRepository.Create(new()
-        //    {
-        //        Image = fileName,
-        //    });
-
-        //    await _sliderRepository.Save();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(SliderCreateDto createDto)
+        {           
+            try
+            {
+                await _sliderService.CreateSliderAsync(createDto);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("ImageUrl", ex.Message);
+              
+                return View(createDto);
+            }   
+            return RedirectToAction(nameof(Index));
+        }
 
 
         //[HttpPost]
@@ -98,21 +96,6 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
         //    }
         //}
 
-        private bool CheckImageValid(CreateSliderVM eventVM)
-        {
-
-            if (!eventVM.Photo.CheckFileType("image/"))
-            {
-                _errorMessage = $"{eventVM.Photo.FileName}-faylin novu Ferqlidir!";
-                return false;
-            }
-            if (!eventVM.Photo.CheckFileSize(300))
-            {
-                _errorMessage = $"{eventVM.Photo.FileName}- faylin olcusu boyukdur!";
-                return false;
-            }
-
-            return true;
-        }
+       
     }
 }

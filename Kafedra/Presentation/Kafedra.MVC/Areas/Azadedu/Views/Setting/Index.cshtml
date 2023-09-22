@@ -4,6 +4,10 @@
     int count = (Model.PageIndex - 1) * Model.PageSize + 1;
 }
 
+<style>
+   
+</style>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -38,10 +42,10 @@
                                         <th scope="col">Key</th>
                                         <th scope="col">Value</th>
                                         <th scope="col">
-                                            Image :
+                                            Image 
                                         </th>
                                         <th>
-                                            Action :
+                                            Action 
                                         </th>
                                     </tr>
                                 </thead>
@@ -78,7 +82,7 @@
                                                 </td>
                                             }
                                             <td>
-                                                <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-outline-dark">
+                                                <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-outline-info">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             </td>

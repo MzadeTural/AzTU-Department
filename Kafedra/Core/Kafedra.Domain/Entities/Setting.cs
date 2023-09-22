@@ -16,7 +16,7 @@ namespace Kafedra.Domain.Entities
         [NotMapped]
         public IFormFile ImageFile { get; set; }
         [NotMapped]
-        public int NumValue { get; set; }
+        public int? NumValue { get; set; }
 
     }
 }

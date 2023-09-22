@@ -52,15 +52,15 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var newId = id;
-            Console.WriteLine(newId);
-            return View(new Setting()
+            var setting = await _settingRepository.GetSingleAsync(x => x.Id == id);
+            int num;
+            if (int.TryParse(setting.Value, out num))
             {
-                Key = "1234",
-                Value = "adf"
-            });
+                setting.NumValue = num;
+            }
+            return View(setting);
         }
 
         //public async Task<IActionResult> Edit(int id)
@@ -84,7 +84,8 @@ namespace Kafedra.MVC.Areas.Azadedu.Controllers
             //   var oldSetting = await _settingRepository.GetSingleAsync(x => x.Id == setting.Id);
             var oldSetting = await _context.Settings.FirstOrDefaultAsync(s => s.Id == setting.Id);
             if (oldSetting is null) { return View("error","home"); }
-            setting.Value = setting.NumValue.ToString();
+            if (setting.NumValue is not null)
+                setting.Value = setting.NumValue.ToString();
             if (oldSetting.Key.Contains("image"))
             {
                 if (setting.ImageFile != null)
